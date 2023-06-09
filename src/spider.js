@@ -14,11 +14,10 @@ const statusMap = {
   3: '已结束',
 }
 
-const statuCode = 1
-
 const maxPageNumber = 500
 
-async function getDetailIds(pageNumber) {
+async function getDetailIds(pageNumber, statuCode) {
+  console.log(`爬取${statusMap[statuCode]}第${pageNumber}页`)
   return axios.get(
     `https://ssl.gongyi.qq.com/cgi-bin/gywcom_WXSearchCGI_ES?ptype=stat&s_status=${statuCode}&p=${pageNumber}`,
   )
@@ -37,11 +36,12 @@ async function getInfo(id, index) {
   ])
 }
 
-async function writeFile(result) {
+function writeFile(result, statuCode) {
   const fields = [
     '项目名称',
     '项目起止时间',
-    '公益机构',
+    '善款接收',
+    '执行机构',
     '项目简介',
     '筹款方案备案号',
     '筹款目标',
@@ -72,21 +72,22 @@ async function writeFile(result) {
   }
 }
 
-async function main() {
-  console.time('总耗时')
+async function main(statuCode) {
   const idsReqs = []
   const detailReqs = []
   const ids = []
   const results = []
   for (let i = 1; i <= maxPageNumber; i++) {
-    idsReqs.push(getDetailIds(i))
+    idsReqs.push(() => getDetailIds(i, statuCode))
   }
 
-  const idsRes = await Promise.all(idsReqs)
+  const idsRes = await limit(idsReqs, 64)
 
   idsRes.forEach(res => {
     ids.push(...res.data.plist.map(e => e.id))
   })
+
+  console.log(`总共有${ids.length}个项目`)
 
   for (let i = 0; i < ids.length; i++) {
     const id = ids[i]
@@ -104,6 +105,7 @@ async function main() {
     const time = `${msg.base.startTime} - ${
       msg.base.endTime === '0' ? '2023-12-31' : msg.base.endTime
     }`
+    const eOrgName = msg.base.eOrgName
     const fundName = msg.base.fundName
     const content = delHtmlTag(msg.detail.desc).replace(/(^\s*)|(\s*$)/g, '')
     const recordNum = msg.base.record_num
@@ -113,7 +115,8 @@ async function main() {
     results.push({
       项目名称: title,
       项目起止时间: time,
-      公益机构: fundName,
+      善款接收: fundName,
+      执行机构: eOrgName,
       项目简介: content,
       筹款方案备案号: recordNum,
       筹款目标: needMoney,
@@ -122,8 +125,11 @@ async function main() {
     })
   })
 
-  writeFile(results)
-  console.timeEnd('总耗时')
+  writeFile(results, statuCode)
 }
 
-main()
+console.time('总耗时')
+for (let i = 1; i <= 3; i++) {
+  await main(i)
+}
+console.timeEnd('总耗时')
