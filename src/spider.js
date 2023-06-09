@@ -1,10 +1,14 @@
-import fs, { mkdir } from 'fs'
+import fs from 'fs'
+import https from 'https'
 import axios from 'axios'
 import { Parser } from '@json2csv/plainjs'
 import { limit } from '@cansiny0320/async-extra'
 import { checkIsNormal, delHtmlTag } from './utils.js'
 import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
+
+axios.defaults.timeout = 10000
+axios.defaults.httpsAgent = new https.Agent({ keepAlive: true })
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -51,7 +55,7 @@ function writeFile(result, statuCode) {
   try {
     const parser = new Parser({ fields })
     const csv = parser.parse(result)
-    mkdir(resolve(__dirname, '../data'), { recursive: true }, err => {
+    fs.mkdir(resolve(__dirname, '../data'), { recursive: true }, err => {
       if (err) {
         console.log(err)
       }
