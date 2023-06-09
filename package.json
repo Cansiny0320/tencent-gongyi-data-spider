@@ -17,7 +17,6 @@
   "dependencies": {
     "@cansiny0320/async-extra": "^0.2.1",
     "@json2csv/plainjs": "^7.0.1",
-    "axios": "^1.4.0",
-    "json2csv": "6.0.0-alpha.2"
+    "axios": "^1.4.0"
   }
 }

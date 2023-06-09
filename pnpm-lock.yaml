@@ -4,13 +4,11 @@ specifiers:
   '@cansiny0320/async-extra': ^0.2.1
   '@json2csv/plainjs': ^7.0.1
   axios: ^1.4.0
-  json2csv: 6.0.0-alpha.2
 
 dependencies:
   '@cansiny0320/async-extra': 0.2.1
   '@json2csv/plainjs': 7.0.1
   axios: 1.4.0
-  json2csv: 6.0.0-alpha.2
 
 packages:
 
@@ -34,10 +32,6 @@ packages:
     resolution: {integrity: sha512-6oikjkMTYAHGqKmcC9leE4+kY4Ch4eiTImXUN/N4d2bNGBYs0LJ/tfxmpvF5eExSU7iiPlV9jYlADqvj3NWA3Q==}
     dev: false
 
-  /@streamparser/json/0.0.6:
-    resolution: {integrity: sha512-vL9EVn/v+OhZ+Wcs6O4iKE9EUpwHUqHmCtNUMWjqp+6dr85+XPOSGTEsqYNq1Vn04uk9SWlOVmx9J48ggJVT2Q==}
-    dev: false
-
   /asynckit/0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
     dev: false
@@ -57,11 +51,6 @@ packages:
     engines: {node: '>= 0.8'}
     dependencies:
       delayed-stream: 1.0.0
-    dev: false
-
-  /commander/6.2.1:
-    resolution: {integrity: sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==}
-    engines: {node: '>= 6'}
     dev: false
 
   /delayed-stream/1.0.0:
@@ -86,16 +75,6 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
-    dev: false
-
-  /json2csv/6.0.0-alpha.2:
-    resolution: {integrity: sha512-nJ3oP6QxN8z69IT1HmrJdfVxhU1kLTBVgMfRnNZc37YEY+jZ4nU27rBGxT4vaqM/KUCavLRhntmTuBFqZLBUcA==}
-    engines: {node: '>= 12', npm: '>= 6.13.0'}
-    hasBin: true
-    dependencies:
-      '@streamparser/json': 0.0.6
-      commander: 6.2.1
-      lodash.get: 4.4.2
     dev: false
 
   /lodash.get/4.4.2:
